@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/btn_ileri"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+        android:layout_marginStart="32dp"
+
+        android:layout_marginBottom="32dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/btn_geri"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ileri" />
+
+    <ImageButton
+        android:id="@+id/btn_geri"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/geri" />
+
+    <ImageButton
+        android:id="@+id/btn_sol"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+
+        android:layout_marginEnd="32dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toStartOf="@+id/btn_sag"
+        app:layout_constraintTop_toTopOf="@+id/btn_sag"
+        app:srcCompat="@drawable/sol" />
+
+    <ImageButton
+    android:id="@+id/btn_sag"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+
+
+    android:layout_marginEnd="32dp"
+    android:layout_marginBottom="32dp"
+    android:background="@android:color/transparent"
+    android:scaleType="centerInside"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:srcCompat="@drawable/sag" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_bluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:src="@drawable/ic_bluetooth_black_24dp"
+        app:backgroundTint="@color/colorPrimary"
+
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
