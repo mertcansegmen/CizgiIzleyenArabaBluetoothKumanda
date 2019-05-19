@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -29,12 +30,15 @@ public class MainActivity extends AppCompatActivity {
     ImageButton sagButon;
     ImageButton solButon;
 
+
     private final String BLUETOOTH_MODUL_ADRESI = "00:18:E4:40:00:06";
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
-    private BluetoothDevice bluetoothModulu;
+    private BluetoothDevice bluetoothCihazi;
     private BluetoothSocket socket;
     private OutputStream outputStream;
+
+    String yon;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -48,12 +52,13 @@ public class MainActivity extends AppCompatActivity {
         sagButon = findViewById(R.id.btn_sag);
         solButon = findViewById(R.id.btn_sol);
 
+        yon = "9";
+
         bluetoothButon.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
 
         bluetoothButon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(bluetoothBaglantisiBaslat()){
                     if(aracaBaglan()) {
                         bluetoothButon.setImageResource(R.drawable.ic_basarili);
@@ -79,7 +84,28 @@ public class MainActivity extends AppCompatActivity {
         ileriButon.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                komutGonder(event, "1");
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if(yon.equals("3"))
+                        yon = "3";
+                    else if(yon.equals("2"))
+                        yon = "5";
+                    else if(yon.equals("4"))
+                        yon = "8";
+                    else
+                        yon = "1";
+                    veriGonder(yon);
+                }
+                else if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(yon.equals("5"))
+                        yon = "2";
+                    else if(yon.equals("8"))
+                        yon = "4";
+                    else
+                        yon = "9";
+
+                    veriGonder(yon);
+                }
                 return false;
             }
         });
@@ -87,7 +113,29 @@ public class MainActivity extends AppCompatActivity {
         geriButon.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                komutGonder(event, "2");
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if(yon.equals("1"))
+                        yon = "1";
+                    else if(yon.equals("2"))
+                        yon = "6";
+                    else if(yon.equals("4"))
+                        yon = "7";
+                    else
+                        yon = "3";
+
+                    veriGonder(yon);
+                }
+                else if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(yon.equals("6"))
+                        yon = "2";
+                    else if(yon.equals("7"))
+                        yon = "4";
+                    else
+                        yon = "9";
+
+                    veriGonder(yon);
+                }
                 return false;
             }
         });
@@ -95,7 +143,29 @@ public class MainActivity extends AppCompatActivity {
         solButon.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                komutGonder(event, "3");
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if(yon.equals("2"))
+                        yon = "2";
+                    else if(yon.equals("1"))
+                        yon = "8";
+                    else if(yon.equals("3"))
+                        yon = "7";
+                    else
+                        yon = "4";
+
+                    veriGonder(yon);
+                }
+                else if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(yon.equals("8"))
+                        yon = "1";
+                    else if(yon.equals("7"))
+                        yon = "3";
+                    else
+                        yon = "9";
+
+                    veriGonder(yon);
+                }
                 return false;
             }
         });
@@ -103,28 +173,42 @@ public class MainActivity extends AppCompatActivity {
         sagButon.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                komutGonder(event, "4");
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if(yon.equals("4"))
+                        yon = "4";
+                    else if(yon.equals("1"))
+                        yon = "5";
+                    else if(yon.equals("3"))
+                        yon = "6";
+                    else
+                        yon = "2";
+
+                    veriGonder(yon);
+                }
+                else if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(yon.equals("5"))
+                        yon = "1";
+                    else if(yon.equals("6"))
+                        yon = "3";
+                    else
+                        yon = "9";
+
+                    veriGonder(yon);
+                }
                 return false;
             }
         });
     }
 
-    private void komutGonder(MotionEvent event, String komut) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN) {
-            try {
-                outputStream.write(komut.getBytes());
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
+    private void veriGonder(String veri){
+        Log.i("mert", veri);
+
+        try {
+            outputStream.write(veri.getBytes());
         }
-        else if(event.getAction() == MotionEvent.ACTION_UP) {
-            try {
-                outputStream.write("10".getBytes());
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
+        catch (IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -132,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
         boolean baglantiBasarili = true;
 
         try {
-            socket = bluetoothModulu.createRfcommSocketToServiceRecord(PORT_UUID);
+            socket = bluetoothCihazi.createRfcommSocketToServiceRecord(PORT_UUID);
             socket.connect();
         }
         catch(IOException e) {
@@ -182,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             for(BluetoothDevice eslesmisCihaz : eslesmisCihazlar) {
                 if(eslesmisCihaz.getAddress().equals(BLUETOOTH_MODUL_ADRESI)) {
-                    bluetoothModulu = eslesmisCihaz;
+                    bluetoothCihazi = eslesmisCihaz;
                     bluetoothModuluBulundu = true;
                     break;
                 }
