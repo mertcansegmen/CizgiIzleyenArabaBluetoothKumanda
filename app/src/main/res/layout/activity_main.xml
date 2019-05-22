@@ -77,5 +77,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="Çizgi İzleme "
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_bluetooth"
+        app:layout_constraintTop_toTopOf="@+id/btn_bluetooth" />
+
 
 </android.support.constraint.ConstraintLayout>

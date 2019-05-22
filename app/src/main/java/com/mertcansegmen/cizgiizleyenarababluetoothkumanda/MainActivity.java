@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     ImageButton geriButon;
     ImageButton sagButon;
     ImageButton solButon;
+
+    Switch cizgiIzlemeSwitch;
 
 
     private final String BLUETOOTH_MODUL_ADRESI = "00:18:E4:40:00:06";
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         geriButon = findViewById(R.id.btn_geri);
         sagButon = findViewById(R.id.btn_sag);
         solButon = findViewById(R.id.btn_sol);
+        cizgiIzlemeSwitch = findViewById(R.id.switch1);
 
         yon = "9";
 
@@ -197,6 +202,16 @@ public class MainActivity extends AppCompatActivity {
                     veriGonder(yon);
                 }
                 return false;
+            }
+        });
+
+        cizgiIzlemeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    veriGonder("a");
+                if(!isChecked)
+                    veriGonder("d");
             }
         });
     }
